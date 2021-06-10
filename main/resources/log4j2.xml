@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration packages="com.amazonaws.services.lambda.runtime.log4j2">
+    <Properties>
+        <Property name="pattern">%date{ISO8601}{UTC} [%t] %-5level %logger{36} - %message%n</Property>
+    </Properties>
+    <Appenders>
+        <Lambda name="lambda">
+            <PatternLayout pattern="${pattern}"/>
+        </Lambda>
+    </Appenders>
+    <Loggers>
+        <!-- avoid duplicated logs with additivity=false -->
+        <Logger name="aws.proserve" level="debug" additivity="false">
+            <AppenderRef ref="lambda"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="lambda"/>
+        </Root>
+    </Loggers>
+</Configuration>
